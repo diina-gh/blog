@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.blog.blog.models.User;
+import com.blog.blog.models.user.UserEntity;
 import com.blog.blog.services.UserService;
 
 import java.util.List;
@@ -18,28 +18,27 @@ public class UserController {
     UserService service;
 
     @GetMapping("")
-    public List<User> list() {
+    public List<UserEntity> list() {
         return service.listAllUser();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> get(@PathVariable Integer id) {
+    public ResponseEntity<UserEntity> get(@PathVariable Integer id) {
         try {
-            User user = service.getUser(id);
-            return new ResponseEntity<User>(user, HttpStatus.OK);
+            UserEntity user = service.getUser(id);
+            return new ResponseEntity<UserEntity>(user, HttpStatus.OK);
         } catch (NoSuchElementException e) {
-            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<UserEntity>(HttpStatus.NOT_FOUND);
         }
     }
     @PostMapping("/")
-    public void add(@RequestBody User user) {
+    public void add(@RequestBody UserEntity user) {
         service.saveUser(user);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody User user, @PathVariable Integer id) {
+    public ResponseEntity<?> update(@RequestBody UserEntity user, @PathVariable Integer id) {
         try {
-            User existUser = service.getUser(id);
-            user.setId(id);
+            UserEntity existUser = service.getUser(id);
             service.saveUser(user);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException e) {
