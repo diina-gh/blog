@@ -11,8 +11,15 @@ import javax.persistence.MappedSuperclass;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 
 @MappedSuperclass
+@Getter
+@Setter 
+@NoArgsConstructor
 public class AbstractEntity {
 
     @Id
@@ -28,32 +35,8 @@ public class AbstractEntity {
     @LastModifiedDate    
     private Instant updatedAt;
 
-    public AbstractEntity() {
-    }
-
     public AbstractEntity( boolean activated) {
         this.activated = activated;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public boolean getActivated() {
-        return activated;
-    }
-
-    public void setActivated(boolean activated) {
-        this.activated = activated;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public Instant getUpdatedeAt() {
-        return updatedAt;
-    }
-
-    
 }

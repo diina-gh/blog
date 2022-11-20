@@ -1,11 +1,13 @@
 package com.blog.blog.controllers;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.blog.blog.models.user.UserEntity;
+import com.blog.blog.models.user.dto.UserDto;
 import com.blog.blog.services.UserService;
 
 import java.util.List;
@@ -18,18 +20,22 @@ public class UserController {
     @Autowired
     UserService service;
 
+    private static final ModelMapper modelMapper = new ModelMapper();
+
 
     @PostMapping("/")
-    public void add(@RequestBody UserEntity user) {
-        service.saveUser(user);
+    public void create(@RequestBody UserDto itemDto) {
+        UserEntity item = modelMapper.map(itemDto, UserEntity.class);
+        service.saveUser(item);
     }
-    
+
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody UserEntity user, @PathVariable Integer id) {
+    public ResponseEntity<?> update(@RequestBody UserDto itemDto, @PathVariable Integer id) {
         try {
             UserEntity existUser = service.getUser(id);
-            service.saveUser(user);
+            UserEntity item = modelMapper.map(itemDto, UserEntity.class);
+            service.saveUser(item);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
