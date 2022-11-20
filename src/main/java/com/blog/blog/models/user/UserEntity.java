@@ -19,7 +19,7 @@ public class UserEntity extends AbstractEntity   {
     @Column(nullable = false)
     private String firstName;
 
-    @Column(nullable = false    )
+    @Column(nullable = false)
     private String lastName;
 
     @Column(unique=true, nullable = false)
@@ -40,11 +40,24 @@ public class UserEntity extends AbstractEntity   {
     public UserEntity() {
     }
 
-    public UserEntity(int id, String firstName, String lastName) {
+    public UserEntity(boolean activated, CivilityEnum civility,String firstName, String lastName, String username, String email, String phoneNumber, String password) {
+        super(activated);
+        this.civility = civility;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.username = username;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
     }
 
+    public CivilityEnum getCivility() {
+        return civility;
+    }
+
+    public void setCivility(CivilityEnum civility) {
+        this.civility = civility;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -61,5 +74,30 @@ public class UserEntity extends AbstractEntity   {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
 
 }

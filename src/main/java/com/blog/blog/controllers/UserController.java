@@ -14,27 +14,17 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
     @Autowired
     UserService service;
 
-    @GetMapping("")
-    public List<UserEntity> list() {
-        return service.listAllUser();
-    }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserEntity> get(@PathVariable Integer id) {
-        try {
-            UserEntity user = service.getUser(id);
-            return new ResponseEntity<UserEntity>(user, HttpStatus.OK);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<UserEntity>(HttpStatus.NOT_FOUND);
-        }
-    }
     @PostMapping("/")
     public void add(@RequestBody UserEntity user) {
         service.saveUser(user);
     }
+    
+
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody UserEntity user, @PathVariable Integer id) {
         try {
@@ -45,9 +35,29 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
-
         service.deleteUser(id);
     }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserEntity> get(@PathVariable Integer id) {
+        try {
+            UserEntity user = service.getUser(id);
+            return new ResponseEntity<UserEntity>(user, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<UserEntity>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    @GetMapping("")
+    public List<UserEntity> list() {
+        return service.listAllUser();
+    }
+
+
 }
